@@ -1,0 +1,168 @@
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="styles.css">
+        <title>dndproject</title>
+    </head>
+    <body>
+        <div class="row">
+            <div class="column">
+                <h1><u>Combat Tracker</u></h1>
+
+                <!--
+                <button class="col1-btn" id="addChar-btn">ADD NEW CHARACTER</button>
+                <br>
+                -->
+                <div class="newChar-popup" id="newChar-form">
+                    <form class="form-container">
+                        <h2>Add a new character</h2>
+                        <label for="charName">Name: </label>
+                        <input type="text" placeholder="Name" name="charName" id="charName-input">
+
+                        <label for="initiative">Initiative: </label>
+                        <input type="number" placeholder="Init" name="initiative" id="init-input">
+                        <br>
+
+                        <label for="maxHp">Max HP: </label>
+                        <input type="number" placeholder="HP" name="maxHp" id="maxHp-input">
+
+                        <label for="currHp">Current HP: </label>
+                        <input type="number" placeholder="currHP" name="currHp" id="currHp-input">
+                        <br>
+
+                        <input type="checkbox" id="saveToCollection-check" name="saveToCollection-check">
+                        <label for="saveToCollection-check">Save to your collection?</label>
+                        <br>
+
+                        <button type="submit" id="createChar-btn">Create Char</button>
+                        <button type="submit" id="startCombat-btn">Start Combat!</button>
+                    </form>
+                </div>
+
+                <label for="loadCharFromCollection">Load a character from my collection:</label>
+                <select id="loadCharFromCollection-sel" name="loadCharFromCollection"></select>
+                <button class="apply-btn" id="loadCharFromCollection-btn">Load</button>
+
+                <br>
+
+                <a href="collection.html">Manage My Collection</a>
+                <div class="charDisplay-el">
+                    <h3><u>Round order: </u></h3>
+                    <ul id="charDisplay-list"></ul>
+                </div>
+            </div>
+            <div class="column">
+                <h2><u>Battle Log</u></h2>
+                <div class="battleLog-el">
+                    <div class="battleLogTurnInfo-div" id=battleLogTurnInfo-div>
+                    </div>
+                    <ul class="condBox-ul" id="condBox-ul">
+                    </ul>
+                    <div class="battleLog-div" id="battleLog-div">
+                    </div>
+                    <footer class="battleTurn-footer">
+                        <button class="battleTurn-btn" id="nextTurn-btn">Next Turn >></button>
+                    </footer>
+                </div>
+            </div>
+            <div class="column">
+                <div class="dmActions-el">
+                    <h2><u>DM Actions</u></h2>
+                    
+                    <br>
+
+                    <div class="d20Roll-el">
+                        <button id="rollDis20-btn" onclick="rollDice(20, 0, 0)"><i class="fas fa-dice-d20"></i></button>
+                        <button id="roll20-btn" onclick="rollDice(20, 0, 1)"><i class="fas fa-dice-d20"></i></button>
+                        <button id="rollAdv20-btn" onclick="rollDice(20, 0, 2)"><i class="fas fa-dice-d20"></i></button>
+                        <p id="rollResult-el">Roll result</p>
+                    </div>
+
+                    <div class="dmgRoll-el">
+                        <input class="dmg-inps" type="number" id="dmgQuant-inp" value="0">
+                        <b>d</b>
+                        <select id="dmgSides-sel" name="sides">
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="8">8</option>
+                            <option value="10">10</option>
+                            <option value="12">12</option>
+                        </select>
+                        <b>+</b>
+                        <input class="dmg-inps" type="number" id="dmgModif-inp" value="0">
+                        <button id="rollDmg-btn">Roll Dmg</button>
+                        <t id="dmgResult-el"><b>dmg result</b>
+                    </div>
+                    
+                    <hr>
+    
+                    <div class="dmDmg-el">
+                        <button id="useRolledDmg-btn">Use Rolled Dmg</button>
+                        <input class="dmg-inps" type="number" id="dmDmg-inp">
+                        <label for="dmDmgChar-sel"> Dmg to char:</label>
+                        <select id="dmDmgChar-sel" name="dmDmgChar-sel">
+                        </select>
+                        <button class="apply-btn" id="applyDmg-btn">Apply Dmg</button>
+                        <br>
+                    </div>
+                    <br>
+                    <div class="dmCondition-el">
+                        <select id="dmCondition-sel" name="dmCondition">
+                            <option value="Blinded">Blinded</option>
+                            <option value="Charmed">Charmed</option>
+                            <option value="Concentration">Concentration</option>
+                            <option value="Deafened">Deafened</option>
+                            <option value="Frightened">Frightened</option>
+                            <option value="Grappled">Grappled</option>
+                            <option value="Incapacitated">Incapacitated</option>
+                            <option value="Invisible">Invisible</option>
+                            <option value="Paralyzed">Paralyzed</option>
+                            <option value="Petrified">Petrified</option>
+                            <option value="Poisoned">Poisoned</option>
+                            <option value="Restrained">Restrained</option>
+                            <option value="Stunned">Stunned</option>
+                            <option value="Unconscious">Unconscious</option>
+                        </select>
+                        <label for="dmConditionChar-sel">Condition to char:</label>
+                        <select id="dmConditionChar-sel" name="dmConditionChar-sel">
+                        </select>
+                        <button class="apply-btn" id="applyCondition-btn">Apply/Remove Condition</button>
+                    </div>
+                </div>
+
+                <hr>
+
+                <table> <!-- Conditions -->
+                    <tr>
+                        <td><button class="condition" id="blinded-btn" onclick="displayCondition(1)">Blinded</td>
+                        <td><button class="condition" id="charmed-btn" onclick="displayCondition(2)">Charmed</td>
+                        <td><button class="condition" id="concentration-btn" onclick="displayCondition(3)">Concentration</td>
+                        <td><button class="condition" id="deafened-btn" onclick="displayCondition(4)">Deafened</td>
+                    </tr>
+                    <tr>
+                        <td><button class="condition" id="frightened-btn" onclick="displayCondition(5)">Frightened</td>
+                        <td><button class="condition" id="grappled-btn" onclick="displayCondition(6)">Grappled</td>
+                        <td><button class="condition" id="incapacitated-btn" onclick="displayCondition(7)">Incapacitated</td>
+                        <td><button class="condition" id="invisible-btn" onclick="displayCondition(8)">Invisible</td>
+                    </tr>
+                    <tr>
+                        <td><button class="condition" id="paralyzed-btn" onclick="displayCondition(9)">Paralyzed</td>
+                        <td><button class="condition" id="petrified-btn" onclick="displayCondition(10)">Petrified</td>
+                        <td><button class="condition" id="poisoned-btn" onclick="displayCondition(11)">Poisoned</td>
+                        <td><button class="condition" id="prone-btn" onclick="displayCondition(12)">Prone</td>
+                    </tr>
+                    <tr>
+                        <td><button class="condition" id="restrained-btn" onclick="displayCondition(13)">Restrained</td>
+                        <td><button class="condition" id="stunned-btn" onclick="displayCondition(14)">Stunned</td>
+                        <td><button class="condition" id="unconscious-btn" onclick="displayCondition(15)">Unconscious</td>
+                    </tr>
+                </table>
+
+                <div id="conditionText-el"></div>
+            </div>
+        </div>
+        
+        <script src="app.js"></script>
+    </body>
+</html>
